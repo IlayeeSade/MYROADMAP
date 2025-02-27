@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Roadmap</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --tertiary-color: #e74c3c;
+            --background-color: #f9f9f9;
+            --text-color: #333;
+            --node-color: #fff;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .roadmap-container {
+            position: relative;
+            overflow: auto;
+            min-height: 600px;
+            margin-bottom: 40px;
+        }
+
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .node-row {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        .node {
+            position: relative;
+            background-color: var(--node-color);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .node:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .node h3 {
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .node p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .node.primary {
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .node.secondary {
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .node.tertiary {
+            border-left: 4px solid var(--tertiary-color);
+        }
+
+        .connector {
+            position: absolute;
+            background-color: #ddd;
+            z-index: -1;
+        }
+
+        .vertical-connector {
+            width: 2px;
+            height: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .horizontal-connector {
+            height: 2px;
+        }
+
+        #content-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .content-container {
+            background-color: white;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            border-radius: 10px;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .content-container h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .content-section {
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .node-row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .node {
+                margin: 10px 0;
+                width: 80%;
+            }
+
+            .connector {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Interactive Knowledge Roadmap</h1>
+            <p>Click on any topic to explore detailed information and resources</p>
+        </header>
+
+        <div class="roadmap-container">
+            <div class="roadmap" id="roadmap">
+                <!-- Level 1 -->
+                <div class="node-row">
+                    <div class="node primary" onclick="showContent('main-concept')">
+                        <h3>Main Concept</h3>
+                        <p>Start your journey here</p>
+                    </div>
+                </div>
+
+                <!-- Connector from Level 1 to Level 2 -->
+                <div class="connector vertical-connector" style="top: 82px; height: 60px;"></div>
+
+                <!-- Level 2 -->
+                <div class="node-row">
+                    <div class="node secondary" onclick="showContent('fundamentals')">
+                        <h3>Fundamentals</h3>
+                        <p>Core principles</p>
+                    </div>
+                    <div class="node secondary" onclick="showContent('intermediate')">
+                        <h3>Intermediate</h3>
+                        <p>Building blocks</p>
+                    </div>
+                    <div class="node secondary" onclick="showContent('advanced')">
+                        <h3>Advanced</h3>
+                        <p>Complex topics</p>
+                    </div>
+                </div>
+
+                <!-- Connectors from Level 2 to Level 3 -->
+                <div class="connector vertical-connector" style="top: 182px; left: 25%; height: 60px;"></div>
+                <div class="connector vertical-connector" style="top: 182px; left: 50%; height: 60px;"></div>
+                <div class="connector vertical-connector" style="top: 182px; left: 75%; height: 60px;"></div>
+
+                <!-- Horizontal connector across Level 2 -->
+                <div class="connector horizontal-connector" style="top: 142px; left: 25%; width: 50%;"></div>
+
+                <!-- Level 3 - Row 1 -->
+                <div class="node-row">
+                    <div class="node tertiary" onclick="showContent('topic-1')">
+                        <h3>Topic 1</h3>
+                        <p>First sub-concept</p>
+                    </div>
+                    <div class="node tertiary" onclick="showContent('topic-2')">
+                        <h3>Topic 2</h3>
+                        <p>Second sub-concept</p>
+                    </div>
+                </div>
+
+                <!-- Connectors for Level 3 Row 1 -->
+                <div class="connector vertical-connector" style="top: 282px; left: 33%; height: 60px;"></div>
+                <div class="connector vertical-connector" style="top: 282px; left: 67%; height: 60px;"></div>
+                <div class="connector horizontal-connector" style="top: 242px; left: 33%; width: 34%;"></div>
+
+                <!-- Level 3 - Row 2 -->
+                <div class="node-row">
+                    <div class="node tertiary" onclick="showContent('topic-3')">
+                        <h3>Topic 3</h3>
+                        <p>Third sub-concept</p>
+                    </div>
+                    <div class="node tertiary" onclick="showContent('topic-4')">
+                        <h3>Topic 4</h3>
+                        <p>Fourth sub-concept</p>
+                    </div>
+                    <div class="node tertiary" onclick="showContent('topic-5')">
+                        <h3>Topic 5</h3>
+                        <p>Fifth sub-concept</p>
+                    </div>
+                </div>
+
+                <!-- Horizontal connector across Level 3 Row 2 -->
+                <div class="connector horizontal-connector" style="top: 342px; left: 25%; width: 50%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Overlay -->
+    <div id="content-overlay">
+        <div class="content-container">
+            <span class="close-btn" onclick="hideContent()">&times;</span>
+            <div id="content-display">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Knowledge Roadmap Project | Created by [Your Name]</p>
+    </footer>
+
+    <script>
+        // Define content for each node
+        const nodeContent = {
+            'main-concept': {
+                title: 'Main Concept Overview',
+                content: `
+                    <div class="content-section">
+                        <h3>Introduction</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Key Points</h3>
+                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Getting Started</h3>
+                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                    </div>
+                `
+            },
+            'fundamentals': {
+                title: 'Fundamentals',
+                content: `
+                    <div class="content-section">
+                        <h3>Basic Principles</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Foundation Knowledge</h3>
+                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Resources</h3>
+                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                    </div>
+                `
+            },
+            'intermediate': {
+                title: 'Intermediate Concepts',
+                content: `
+                    <div class="content-section">
+                        <h3>Building on Fundamentals</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Practical Applications</h3>
+                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Case Studies</h3>
+                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                    </div>
+                `
+            },
+            'advanced': {
+                title: 'Advanced Topics',
+                content: `
+                    <div class="content-section">
+                        <h3>Complex Implementations</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Expert Techniques</h3>
+                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Research Frontiers</h3>
+                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                    </div>
+                `
+            },
+            'topic-1': {
+                title: 'Topic 1: Detailed Exploration',
+                content: `
+                    <div class="content-section">
+                        <h3>Overview</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Key Components</h3>
+                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Practical Examples</h3>
+                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                    </div>
+                `
+            },
+            'topic-2': {
+                title: 'Topic 2: In-Depth Analysis',
+                content: `
+                    <div class="content-section">
+                        <h3>Core Concepts</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Implementation Strategies</h3>
+                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Advanced Applications</h3>
+                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                    </div>
+                `
+            },
+            'topic-3': {
+                title: 'Topic 3: Comprehensive Guide',
+                content: `
+                    <div class="content-section">
+                        <h3>Introduction</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Technical Details</h3>
+                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Best Practices</h3>
+                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                    </div>
+                `
+            },
+            'topic-4': {
+                title: 'Topic 4: Expert Analysis',
+                content: `
+                    <div class="content-section">
+                        <h3>Advanced Principles</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Specialized Techniques</h3>
+                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Case Studies</h3>
+                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                    </div>
+                `
+            },
+            'topic-5': {
+                title: 'Topic 5: Complete Reference',
+                content: `
+                    <div class="content-section">
+                        <h3>Overview</h3>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Detailed Analysis</h3>
+                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Future Directions</h3>
+                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                    </div>
+                `
+            }
+        };
+
+        // Function to show content when a node is clicked
+        function showContent(nodeId) {
+            const content = nodeContent[nodeId];
+            if (content) {
+                document.getElementById('content-display').innerHTML = `
+                    <h2>${content.title}</h2>
+                    ${content.content}
+                `;
+                document.getElementById('content-overlay').style.display = 'flex';
+                // Prevent scrolling of the background
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Function to hide content overlay
+        function hideContent() {
+            document.getElementById('content-overlay').style.display = 'none';
+            // Restore scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close overlay when clicking outside the content container
+        document.getElementById('content-overlay').addEventListener('click', function(event) {
+            if (event.target === this) {
+                hideContent();
+            }
+        });
+
+        // Add resize event listener to adjust connector positions
+        window.addEventListener('resize', adjustConnectors);
+
+        function adjustConnectors() {
+            // This function would recalculate connector positions based on node positions
+            // For a proper implementation, you'd need to get each node's position and adjust connectors accordingly
+            // This is a placeholder for that functionality
+            console.log("Window resized, connectors should be adjusted");
+        }
+    </script>
+</body>
+</html>
