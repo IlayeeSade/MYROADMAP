@@ -1,19 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowledge Roadmap</title>
     <style>
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --tertiary-color: #e74c3c;
+            /* Light theme colors */
+            --primary-color: #ff1493; /* Hot Pink */
+            --secondary-color: #ff69b4; /* Lighter Hot Pink */
+            --tertiary-color: #c71585; /* Medium Violet Red */
             --background-color: #f9f9f9;
             --text-color: #333;
             --node-color: #fff;
             --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             --hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            --connector-color: #ddd;
+            --border-color: #eee;
+            --header-border: #ddd;
+            --footer-border: #ddd;
+            --footer-text: #666;
+            --overlay-bg: rgba(0, 0, 0, 0.5);
+            --modal-bg: white;
+            --close-btn: #666;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #ff1493; /* Hot Pink */
+            --secondary-color: #ff69b4; /* Lighter Hot Pink */
+            --tertiary-color: #c71585; /* Medium Violet Red */
+            --background-color: #121212;
+            --text-color: #f1f1f1;
+            --node-color: #1e1e1e;
+            --shadow: 0 4px 8px rgba(255, 20, 147, 0.2);
+            --hover-shadow: 0 8px 16px rgba(255, 20, 147, 0.3);
+            --connector-color: #333;
+            --border-color: #333;
+            --header-border: #333;
+            --footer-border: #333;
+            --footer-text: #999;
+            --overlay-bg: rgba(0, 0, 0, 0.7);
+            --modal-bg: #1e1e1e;
+            --close-btn: #999;
         }
 
         * {
@@ -27,6 +55,7 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -39,26 +68,88 @@
             text-align: center;
             margin-bottom: 40px;
             padding: 20px 0;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid var(--header-border);
+            position: relative;
         }
 
         header h1 {
             font-size: 2.5rem;
             color: var(--primary-color);
             margin-bottom: 10px;
+            transition: color 0.3s ease;
         }
 
         header p {
             font-size: 1.2rem;
-            color: #666;
+            color: var(--text-color);
             max-width: 800px;
             margin: 0 auto;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle label {
+            margin-right: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
         }
 
         .roadmap-container {
             position: relative;
             overflow: auto;
-            min-height: 600px;
+            min-height: 800px;
             margin-bottom: 40px;
         }
 
@@ -72,6 +163,7 @@
         .node-row {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
             margin: 20px 0;
             width: 100%;
         }
@@ -82,7 +174,7 @@
             padding: 15px 20px;
             border-radius: 8px;
             box-shadow: var(--shadow);
-            margin: 0 15px;
+            margin: 10px 15px;
             transition: all 0.3s ease;
             cursor: pointer;
             text-align: center;
@@ -97,11 +189,13 @@
         .node h3 {
             margin-bottom: 8px;
             color: var(--primary-color);
+            transition: color 0.3s ease;
         }
 
         .node p {
             font-size: 0.9rem;
-            color: #666;
+            color: var(--text-color);
+            transition: color 0.3s ease;
         }
 
         .node.primary {
@@ -118,15 +212,13 @@
 
         .connector {
             position: absolute;
-            background-color: #ddd;
+            background-color: var(--connector-color);
             z-index: -1;
+            transition: background-color 0.3s ease;
         }
 
         .vertical-connector {
             width: 2px;
-            height: 40px;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         .horizontal-connector {
@@ -139,7 +231,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: var(--overlay-bg);
             display: none;
             align-items: center;
             justify-content: center;
@@ -147,7 +239,7 @@
         }
 
         .content-container {
-            background-color: white;
+            background-color: var(--modal-bg);
             width: 80%;
             max-width: 800px;
             max-height: 80vh;
@@ -155,6 +247,7 @@
             overflow-y: auto;
             padding: 30px;
             position: relative;
+            transition: background-color 0.3s ease;
         }
 
         .close-btn {
@@ -163,26 +256,35 @@
             right: 15px;
             font-size: 24px;
             cursor: pointer;
-            color: #666;
+            color: var(--close-btn);
+            transition: color 0.3s ease;
         }
 
         .content-container h2 {
             color: var(--primary-color);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-color);
+            transition: color 0.3s ease, border-color 0.3s ease;
         }
 
         .content-section {
             margin-bottom: 20px;
         }
 
+        .content-section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
         footer {
             text-align: center;
             padding: 20px 0;
             margin-top: 40px;
-            border-top: 1px solid #ddd;
-            color: #666;
+            border-top: 1px solid var(--footer-border);
+            color: var(--footer-text);
+            transition: color 0.3s ease, border-color 0.3s ease;
         }
 
         @media (max-width: 768px) {
@@ -199,6 +301,14 @@
             .connector {
                 display: none;
             }
+
+            .theme-toggle {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 10px auto;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -207,6 +317,13 @@
         <header>
             <h1>Interactive Knowledge Roadmap</h1>
             <p>Click on any topic to explore detailed information and resources</p>
+            <div class="theme-toggle">
+                <label for="theme-switch">Dark Mode</label>
+                <label class="switch">
+                    <input type="checkbox" id="theme-switch" onchange="toggleTheme()">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </header>
 
         <div class="roadmap-container">
@@ -281,6 +398,96 @@
 
                 <!-- Horizontal connector across Level 3 Row 2 -->
                 <div class="connector horizontal-connector" style="top: 342px; left: 25%; width: 50%;"></div>
+
+                <!-- Level 4 - New row of nodes -->
+                <div class="connector vertical-connector" style="top: 380px; left: 50%; height: 60px;"></div>
+
+                <div class="node-row">
+                    <div class="node primary" onclick="showContent('applications')">
+                        <h3>Applications</h3>
+                        <p>Practical uses</p>
+                    </div>
+                </div>
+
+                <!-- Connector to Level 5 -->
+                <div class="connector vertical-connector" style="top: 480px; height: 60px;"></div>
+
+                <!-- Level 5 - New specialized topics -->
+                <div class="node-row">
+                    <div class="node secondary" onclick="showContent('industry')">
+                        <h3>Industry</h3>
+                        <p>Professional applications</p>
+                    </div>
+                    <div class="node secondary" onclick="showContent('research')">
+                        <h3>Research</h3>
+                        <p>Academic exploration</p>
+                    </div>
+                    <div class="node secondary" onclick="showContent('future-trends')">
+                        <h3>Future Trends</h3>
+                        <p>Emerging developments</p>
+                    </div>
+                </div>
+
+                <!-- Connectors for Level 5 -->
+                <div class="connector vertical-connector" style="top: 580px; left: 25%; height: 60px;"></div>
+                <div class="connector vertical-connector" style="top: 580px; left: 50%; height: 60px;"></div>
+                <div class="connector vertical-connector" style="top: 580px; left: 75%; height: 60px;"></div>
+                <div class="connector horizontal-connector" style="top: 540px; left: 25%; width: 50%;"></div>
+
+                <!-- Level 6 - Final specialized nodes -->
+                <div class="node-row">
+                    <div class="node tertiary" onclick="showContent('case-studies')">
+                        <h3>Case Studies</h3>
+                        <p>Real-world examples</p>
+                    </div>
+                    <div class="node tertiary" onclick="showContent('best-practices')">
+                        <h3>Best Practices</h3>
+                        <p>Optimal approaches</p>
+                    </div>
+                    <div class="node tertiary" onclick="showContent('resources')">
+                        <h3>Resources</h3>
+                        <p>Learning materials</p>
+                    </div>
+                    <div class="node tertiary" onclick="showContent('community')">
+                        <h3>Community</h3>
+                        <p>Collaboration networks</p>
+                    </div>
+                </div>
+
+                <!-- Horizontal connector for Level 6 -->
+                <div class="connector horizontal-connector" style="top: 640px; left: 20%; width: 60%;"></div>
+                
+                <!-- NEW NODES: Adding more specialized topics -->
+                <div class="connector vertical-connector" style="top: 682px; left: 50%; height: 60px;"></div>
+                
+                <div class="node-row">
+                    <div class="node primary" onclick="showContent('mastery')">
+                        <h3>Mastery Path</h3>
+                        <p>Path to expertise</p>
+                    </div>
+                </div>
+                
+                <!-- Connector to new level -->
+                <div class="connector vertical-connector" style="top: 782px; height: 60px;"></div>
+                
+                <!-- New specialized topics -->
+                <div class="node-row">
+                    <div class="node secondary" onclick="showContent('certification')">
+                        <h3>Certification</h3>
+                        <p>Professional credentials</p>
+                    </div>
+                    <div class="node secondary" onclick="showContent('mentorship')">
+                        <h3>Mentorship</h3>
+                        <p>Learning from experts</p>
+                    </div>
+                    <div class="node secondary" onclick="showContent('projects')">
+                        <h3>Projects</h3>
+                        <p>Hands-on experience</p>
+                    </div>
+                </div>
+                
+                <!-- Connectors for new nodes -->
+                <div class="connector horizontal-connector" style="top: 842px; left: 25%; width: 50%;"></div>
             </div>
         </div>
     </div>
@@ -296,7 +503,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2025 Knowledge Roadmap Project | Created by [Your Name]</p>
+        <p>&copy; 2025 Knowledge Roadmap Project | Created by Your Name</p>
     </footer>
 
     <script>
@@ -307,16 +514,16 @@
                 content: `
                     <div class="content-section">
                         <h3>Introduction</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                        <p>Welcome to the main concept of our Knowledge Roadmap. This is your starting point for exploring the entire knowledge domain. From here, you'll branch out into various specializations and depths of understanding.</p>
                     </div>
                     <div class="content-section">
                         <h3>Key Points</h3>
-                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
-                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                        <p>The main concept encompasses the core philosophy, approach, and structure of the entire knowledge domain. Understanding these foundational elements is crucial before proceeding to more specialized topics.</p>
+                        <p>Begin by familiarizing yourself with the terminology, basic principles, and overall scope of what you'll be learning throughout this roadmap.</p>
                     </div>
                     <div class="content-section">
                         <h3>Getting Started</h3>
-                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                        <p>To begin your journey, we recommend first exploring the Fundamentals section, which will provide you with the necessary background knowledge. From there, you can progress to Intermediate and Advanced topics based on your interests and goals.</p>
                     </div>
                 `
             },
@@ -325,15 +532,15 @@
                 content: `
                     <div class="content-section">
                         <h3>Basic Principles</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                        <p>This section covers the essential principles that form the foundation of our knowledge domain. These concepts are the building blocks upon which all more advanced topics are constructed.</p>
                     </div>
                     <div class="content-section">
                         <h3>Foundation Knowledge</h3>
-                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                        <p>You'll learn about the historical context, key terminology, and primary frameworks that define our field. This knowledge is indispensable for anyone looking to achieve proficiency.</p>
                     </div>
                     <div class="content-section">
                         <h3>Resources</h3>
-                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                        <p>For mastering fundamentals, we recommend starting with introductory textbooks, online courses, and tutorial videos. These resources are designed to be accessible to beginners while providing comprehensive coverage of essential concepts.</p>
                     </div>
                 `
             },
@@ -342,16 +549,16 @@
                 content: `
                     <div class="content-section">
                         <h3>Building on Fundamentals</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                        <p>Now that you understand the basics, this section explores more complex implementations and deeper insights into how the fundamental components interact with each other.</p>
                     </div>
                     <div class="content-section">
                         <h3>Practical Applications</h3>
-                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
-                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                        <p>At the intermediate level, we focus on practical application of knowledge through projects, case studies, and problem-solving exercises. This hands-on approach helps solidify abstract concepts.</p>
+                        <p>You'll begin to develop analytical skills specific to the field and learn to apply theoretical knowledge to real-world scenarios.</p>
                     </div>
                     <div class="content-section">
                         <h3>Case Studies</h3>
-                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                        <p>Examining real-world examples provides valuable context for understanding how concepts are applied in practice. Our curated case studies highlight both successes and failures, offering a nuanced view of the field.</p>
                     </div>
                 `
             },
@@ -360,16 +567,16 @@
                 content: `
                     <div class="content-section">
                         <h3>Complex Implementations</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                        <p>The advanced level explores cutting-edge techniques, innovative approaches, and specialized methodologies that represent the current frontier of the field.</p>
                     </div>
                     <div class="content-section">
                         <h3>Expert Techniques</h3>
-                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                        <p>This section covers sophisticated strategies employed by industry leaders and research pioneers. These techniques often require deep understanding of multiple interconnected domains.</p>
                     </div>
                     <div class="content-section">
                         <h3>Research Frontiers</h3>
-                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
-                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                        <p>Discover the latest research developments, emerging trends, and unresolved questions that are currently being explored by experts in the field. This knowledge will position you at the forefront of innovation.</p>
+                        <p>Understanding these advanced topics may require revisiting fundamentals with a new perspective, as complex concepts often reveal new dimensions of basic principles.</p>
                     </div>
                 `
             },
@@ -378,15 +585,15 @@
                 content: `
                     <div class="content-section">
                         <h3>Overview</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                        <p>Topic 1 represents a crucial component of our knowledge domain, focusing on [specific concept]. It serves as a bridge between theoretical understanding and practical application.</p>
                     </div>
                     <div class="content-section">
                         <h3>Key Components</h3>
-                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                        <p>This topic consists of several interconnected elements, including methodological approaches, analytical frameworks, and implementation techniques that are essential for mastery.</p>
                     </div>
                     <div class="content-section">
                         <h3>Practical Examples</h3>
-                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                        <p>Through carefully selected examples, you'll see how Topic 1 principles manifest in real-world scenarios. These examples demonstrate both the versatility and constraints of the underlying concepts.</p>
                     </div>
                 `
             },
@@ -395,16 +602,16 @@
                 content: `
                     <div class="content-section">
                         <h3>Core Concepts</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                        <p>Topic 2 explores the theoretical underpinnings of [specific domain], providing crucial insights into why certain approaches are more effective than others in particular contexts.</p>
                     </div>
                     <div class="content-section">
                         <h3>Implementation Strategies</h3>
-                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
-                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                        <p>Learn various methodologies for implementing Topic 2 concepts, with emphasis on efficiency, scalability, and adaptability to changing requirements.</p>
+                        <p>Different implementation approaches offer varying advantages depending on your specific goals, resource constraints, and operational environment.</p>
                     </div>
                     <div class="content-section">
                         <h3>Advanced Applications</h3>
-                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                        <p>Discover how leading organizations and researchers are pushing the boundaries of what's possible with Topic 2. These cutting-edge applications demonstrate the full potential of these concepts when mastered.</p>
                     </div>
                 `
             },
@@ -413,16 +620,16 @@
                 content: `
                     <div class="content-section">
                         <h3>Introduction</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                        <p>Topic 3 combines elements from multiple domains to create a holistic approach to [specific problem or domain]. This interdisciplinary perspective offers unique insights not available through single-domain approaches.</p>
                     </div>
                     <div class="content-section">
                         <h3>Technical Details</h3>
-                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                        <p>This section covers the technical specifications, architectural considerations, and implementation requirements necessary for successfully working with Topic 3 concepts.</p>
                     </div>
                     <div class="content-section">
                         <h3>Best Practices</h3>
-                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
-                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                        <p>Based on industry experience and research findings, we've compiled a set of best practices that will help you avoid common pitfalls and optimize your approach to Topic 3.</p>
+                        <p>These guidelines have been refined through years of practical implementation and represent the collective wisdom of experts in the field.</p>
                     </div>
                 `
             },
@@ -431,15 +638,15 @@
                 content: `
                     <div class="content-section">
                         <h3>Advanced Principles</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                        <p>Topic 4 deals with sophisticated concepts that build upon and sometimes challenge conventional wisdom in the field. Understanding these principles requires strong foundational knowledge.</p>
                     </div>
                     <div class="content-section">
                         <h3>Specialized Techniques</h3>
-                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
+                        <p>Explore cutting-edge methodologies that represent the current state of the art in the field. These techniques often combine insights from multiple domains to achieve breakthrough results.</p>
                     </div>
                     <div class="content-section">
                         <h3>Case Studies</h3>
-                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                        <p>Examine detailed case studies that showcase both successful implementations and instructive failures. These real-world examples provide context for understanding the practical implications of theoretical concepts.</p>
                     </div>
                 `
             },
@@ -448,58 +655,78 @@
                 content: `
                     <div class="content-section">
                         <h3>Overview</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla facilisi. Phasellus auctor fermentum nisi, vel tincidunt magna fringilla at. Donec sed est non nulla volutpat condimentum.</p>
+                        <p>Topic 5 serves as a comprehensive reference for [specific domain], covering historical development, current best practices, and future directions. This topic connects multiple concepts into a coherent whole.</p>
                     </div>
                     <div class="content-section">
                         <h3>Detailed Analysis</h3>
-                        <p>Nunc egestas, augue at pellentesque laoreet, felis eros vehicula leo, at malesuada velit leo quis pede. Donec interdum, metus et hendrerit aliquet, dolor diam sagittis ligula, eget egestas libero turpis vel mi.</p>
-                        <p>Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui.</p>
+                        <p>This section provides an in-depth examination of each component, explaining not just how but why certain approaches have emerged as dominant in the field.</p>
+                        <p>Understanding the rationale behind these developments helps develop critical thinking skills necessary for innovation and adaptation to new challenges.</p>
                     </div>
                     <div class="content-section">
                         <h3>Future Directions</h3>
-                        <p>Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu.</p>
+                        <p>Based on current trends and emerging research, we explore potential future developments in Topic 5. This forward-looking perspective helps prepare you for upcoming changes in the field.</p>
                     </div>
                 `
-            }
-        };
-
-        // Function to show content when a node is clicked
-        function showContent(nodeId) {
-            const content = nodeContent[nodeId];
-            if (content) {
-                document.getElementById('content-display').innerHTML = `
-                    <h2>${content.title}</h2>
-                    ${content.content}
-                `;
-                document.getElementById('content-overlay').style.display = 'flex';
-                // Prevent scrolling of the background
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        // Function to hide content overlay
-        function hideContent() {
-            document.getElementById('content-overlay').style.display = 'none';
-            // Restore scrolling
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close overlay when clicking outside the content container
-        document.getElementById('content-overlay').addEventListener('click', function(event) {
-            if (event.target === this) {
-                hideContent();
-            }
-        });
-
-        // Add resize event listener to adjust connector positions
-        window.addEventListener('resize', adjustConnectors);
-
-        function adjustConnectors() {
-            // This function would recalculate connector positions based on node positions
-            // For a proper implementation, you'd need to get each node's position and adjust connectors accordingly
-            // This is a placeholder for that functionality
-            console.log("Window resized, connectors should be adjusted");
-        }
-    </script>
-</body>
-</html>
+            },
+            // New nodes content
+            'applications': {
+                title: 'Practical Applications',
+                content: `
+                    <div class="content-section">
+                        <h3>Real-world Use Cases</h3>
+                        <p>This section explores how concepts are applied across diverse industries and contexts, demonstrating the versatility and practical value of the knowledge you've acquired.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Implementation Examples</h3>
+                        <p>Study concrete examples of successful implementations, with detailed breakdowns of the approaches, technologies, and methodologies employed. These examples provide templates you can adapt to your own projects.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Integration Strategies</h3>
+                        <p>Learn how to effectively integrate multiple concepts and techniques to create comprehensive solutions to complex real-world problems. This systems-thinking approach is essential for advanced practitioners.</p>
+                    </div>
+                `
+            },
+            'industry': {
+                title: 'Industry Applications',
+                content: `
+                    <div class="content-section">
+                        <h3>Industry Standards</h3>
+                        <p>Understand the established standards, frameworks, and best practices that guide professional work in the field. Familiarity with these standards is essential for career advancement.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Commercial Implementation</h3>
+                        <p>Explore how concepts are implemented in commercial environments, with consideration for scalability, reliability, maintainability, and cost-effectiveness.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Career Paths</h3>
+                        <p>Discover various professional roles, responsibilities, and career trajectories available to those with expertise in this domain. This information helps guide your professional development efforts.</p>
+                    </div>
+                `
+            },
+            'research': {
+                title: 'Research Directions',
+                content: `
+                    <div class="content-section">
+                        <h3>Current Research Focuses</h3>
+                        <p>Survey the most active areas of research in the field, including key questions being investigated and emerging methodologies being developed.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Academic Perspectives</h3>
+                        <p>Understand how the academic community approaches these topics, including theoretical frameworks, experimental methods, and evaluation criteria.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Publication Channels</h3>
+                        <p>Learn about the primary journals, conferences, and online forums where cutting-edge research is published and discussed. Engaging with these channels keeps you at the forefront of developments.</p>
+                    </div>
+                `
+            },
+            'future-trends': {
+                title: 'Future Trends and Developments',
+                content: `
+                    <div class="content-section">
+                        <h3>Emerging Technologies</h3>
+                        <p>Identify new technologies and methodologies that are likely to transform the field in coming years. Early awareness of these developments provides a competitive advantage.</p>
+                    </div>
+                    <div class="content-section">
+                        <h3>Predictions and Forecasts</h3>
+                        <p>Review expert predictions about how the field will evolve, including potential disruptions, new applications, and changing best practices.</p>
