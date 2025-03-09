@@ -1,0 +1,4 @@
+{
+  "title": "ML Engineering",
+  "content": "<div class='content-section'><h3>Production ML Systems</h3><ul><li><strong>Model Serving</strong>: API design, containerization, orchestration</li><li><strong>Monitoring</strong>: Drift detection, performance metrics</li><li><strong>CI/CD for ML</strong>: Automated testing, deployment pipelines</li></ul></div><div class='content-section'><h3>System Design</h3><ul><li><strong>Scalability</strong>: Distributed training, inference optimization</li><li><strong>Reliability</strong>: Fault tolerance, graceful degradation</li><li><strong>Cost Optimization</strong>: Efficient resource utilization</li></ul></div><div class='content-section'><h3>Implementation Strategies</h3><p>Best practices from your materials for translating research papers into production systems.</p></div>"
+}

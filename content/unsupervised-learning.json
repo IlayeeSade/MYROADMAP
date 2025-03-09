@@ -1,0 +1,4 @@
+{
+  "title": "Unsupervised Learning",
+  "content": "<div class='content-section'><h3>Core Algorithms from CS229</h3><ul><li><strong>Clustering</strong>: K-means, hierarchical clustering, mixture models</li><li><strong>Dimensionality Reduction</strong>: PCA, factor analysis</li><li><strong>Density Estimation</strong>: Kernel density estimation, Gaussian mixtures</li></ul></div><div class='content-section'><h3>Theoretical Perspectives (HUJI Book)</h3><ul><li><strong>Information-Theoretic Approaches</strong>: Minimum description length</li><li><strong>Generative Models</strong>: Theoretical foundations</li></ul></div><div class='content-section'><h3>Advanced Topics from Paper Collection</h3><p>Contemporary approaches to unsupervised learning highlighted in your reading materials.</p></div>"
+}

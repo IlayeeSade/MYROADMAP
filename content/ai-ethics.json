@@ -1,0 +1,4 @@
+{
+  "title": "AI Ethics",
+  "content": "<div class='content-section'><h3>Ethical Frameworks</h3><ul><li><strong>Fairness</strong>: Definitions, metrics, mitigation strategies</li><li><strong>Transparency</strong>: Explainability, interpretability</li><li><strong>Privacy</strong>: Differential privacy, federated learning</li><li><strong>Safety</strong>: Robustness, alignment</li></ul></div><div class='content-section'><h3>Societal Impact</h3><ul><li><strong>Bias</strong>: Sources, measurement, mitigation</li><li><strong>Access</strong>: Democratizing AI technologies</li><li><strong>Labor Impact</strong>: Automation and workforce changes</li></ul></div><div class='content-section'><h3>Ethical Considerations from Paper Collection</h3><p>Ethical dimensions discussed in your AI/ML papers and how researchers address them.</p></div>"
+}

@@ -1,0 +1,4 @@
+{
+  "title": "Deep Learning",
+  "content": "<div class='content-section'><h3>Neural Network Fundamentals</h3><ul><li><strong>Architectures</strong>: Feedforward, CNN, RNN, Transformers</li><li><strong>Optimization</strong>: Backpropagation, gradient descent variants</li><li><strong>Regularization</strong>: Dropout, batch normalization, weight decay</li></ul></div><div class='content-section'><h3>Theoretical Insights</h3><p>Connections to statistical learning theory from your materials:</p><ul><li><strong>Universal Approximation</strong>: Theoretical capacity of neural networks</li><li><strong>Optimization Landscapes</strong>: Loss surfaces and convergence properties</li><li><strong>Generalization in Deep Learning</strong>: Why overparameterized networks work</li></ul></div><div class='content-section'><h3>Key Papers from Your Collection</h3><p>Implementation and analysis of significant deep learning papers from your reading list.</p></div>"
+}

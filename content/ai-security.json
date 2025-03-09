@@ -1,0 +1,4 @@
+{
+  "title": "AI Security",
+  "content": "<div class='content-section'><h3>Adversarial Machine Learning</h3><ul><li><strong>Attack Vectors</strong>: Evasion, poisoning, privacy attacks</li><li><strong>Defenses</strong>: Adversarial training, certified robustness</li><li><strong>Evaluation</strong>: Security metrics and benchmarks</li></ul></div><div class='content-section'><h3>Trustworthy AI</h3><ul><li><strong>Robustness</strong>: Performance under distribution shift</li><li><strong>Safety</strong>: Preventing harmful outputs</li><li><strong>Privacy</strong>: Protecting sensitive information</li></ul></div><div class='content-section'><h3>Security Considerations from Paper Collection</h3><p>Security analyses and approaches from your AI/ML paper readings.</p></div>"
+}

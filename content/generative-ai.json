@@ -1,0 +1,4 @@
+{
+  "title": "Generative AI",
+  "content": "<div class='content-section'><h3>Foundation Models</h3><ul><li><strong>Large Language Models</strong>: GPT, LLaMA, Claude</li><li><strong>Multimodal Models</strong>: Text-to-image, text-to-video</li><li><strong>Diffusion Models</strong>: Image and audio generation</li></ul></div><div class='content-section'><h3>Training Approaches</h3><ul><li><strong>Self-supervised Learning</strong>: Pretraining on unlabeled data</li><li><strong>Fine-tuning</strong>: Specializing models for specific tasks</li><li><strong>RLHF</strong>: Reinforcement learning from human feedback</li></ul></div><div class='content-section'><h3>Key Papers from Your Collection</h3><p>Implementation and analysis of significant generative AI papers from your reading list.</p></div>"
+}

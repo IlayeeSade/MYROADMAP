@@ -1,0 +1,4 @@
+{
+  "title": "Reinforcement Learning",
+  "content": "<div class='content-section'><h3>Fundamental Concepts</h3><ul><li><strong>Markov Decision Processes</strong>: States, actions, rewards, transitions</li><li><strong>Value Functions</strong>: State values and action values</li><li><strong>Policy Optimization</strong>: Finding optimal behavior policies</li></ul></div><div class='content-section'><h3>Algorithmic Approaches</h3><ul><li><strong>Dynamic Programming</strong>: Value iteration, policy iteration</li><li><strong>Temporal Difference Learning</strong>: Q-learning, SARSA</li><li><strong>Policy Gradient Methods</strong>: REINFORCE, Actor-Critic</li><li><strong>Deep RL</strong>: DQN, PPO, SAC</li></ul></div><div class='content-section'><h3>Connections to Statistical Learning</h3><p>Theoretical connections from your materials between RL and statistical learning theory, including exploration-exploitation tradeoffs.</p></div>"
+}

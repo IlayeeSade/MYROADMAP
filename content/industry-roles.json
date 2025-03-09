@@ -1,0 +1,4 @@
+{
+  "title": "Industry Roles",
+  "content": "<div class='content-section'><h3>Core ML Positions</h3><ul><li><strong>ML Engineer</strong>: Building and deploying ML systems</li><li><strong>Data Scientist</strong>: Extracting insights from data</li><li><strong>Research Scientist</strong>: Advancing state-of-the-art methods</li><li><strong>AI Product Manager</strong>: Guiding AI product development</li></ul></div><div class='content-section'><h3>Domain-Specific Roles</h3><ul><li><strong>Computer Vision Engineer</strong>: Visual data processing</li><li><strong>NLP Engineer</strong>: Text and language processing</li><li><strong>AI Ethics Specialist</strong>: Ensuring responsible AI</li><li><strong>ML Ops Engineer</strong>: Managing ML infrastructure</li></ul></div><div class='content-section'><h3>Career Development</h3><p>Growth paths for practitioners who have mastered the concepts from CS229, HUJI book, and your paper collection.</p></div>"
+}

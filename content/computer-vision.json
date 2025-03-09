@@ -1,0 +1,4 @@
+{
+  "title": "Computer Vision",
+  "content": "<div class='content-section'><h3>Core Tasks</h3><ul><li><strong>Classification</strong>: Image categorization</li><li><strong>Detection</strong>: Locating objects in images</li><li><strong>Segmentation</strong>: Pixel-level classification</li><li><strong>Generation</strong>: Creating new visual content</li></ul></div><div class='content-section'><h3>Deep Learning Approaches</h3><ul><li><strong>Convolutional Networks</strong>: CNN architectures and innovations</li><li><strong>Vision Transformers</strong>: Attention-based image processing</li><li><strong>Generative Models</strong>: GANs, diffusion models</li></ul></div><div class='content-section'><h3>Relevant Papers from Your Collection</h3><p>Analysis of computer vision research highlighted in your reading materials.</p></div>"
+}
